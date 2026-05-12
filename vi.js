@@ -9,9 +9,9 @@ window.__I18N__.vi = {
     "langButtonTitle": "Switch to English"
   },
   "name": {
-    "first": "LINH",
+    "first": "MINH",
     "last": "NGUYỄN",
-    "handle": "@linhnguyen"
+    "handle": "@minhnguyen"
   },
   "hp": {
     "label": "VIBE",

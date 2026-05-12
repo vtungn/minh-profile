@@ -1,7 +1,7 @@
 window.__I18N__ = window.__I18N__ || {};
 window.__I18N__.en = {
   "meta": {
-    "title": "Minh Nguyễn ✦ Pixel",
+    "title": "Minh Nguyen ✦ Pixel",
     "htmlLang": "en"
   },
   "ui": {
