@@ -1,7 +1,7 @@
 window.__I18N__ = window.__I18N__ || {};
 window.__I18N__.vi = {
   "meta": {
-    "title": "Linh Nguyễn ✦ Pixel",
+    "title": "Minh Nguyễn ✦ Pixel",
     "htmlLang": "vi"
   },
   "ui": {
@@ -18,9 +18,9 @@ window.__I18N__.vi = {
     "value": "88%"
   },
   "bio": {
-    "line1": "Mẹ của Bơ 🧈 · Yêu thời trang",
+    "line1": "Mẹ của Su · Yêu thời trang",
     "line2": "Mê bếp núc · Sống authentic ✨",
-    "line3": "Hà Nội · Level 28"
+    "line3": "Sài Gòn · Level 28"
   },
   "pills": {
     "fashion": "👗 FASHION",
@@ -41,17 +41,17 @@ window.__I18N__.vi = {
   },
   "links": {
     "tiktokTitle": "TIKTOK",
-    "tiktokSub": "@linhnguyen · 125K",
+    "tiktokSub": "@minhnguyen · 125K",
     "instagramTitle": "INSTAGRAM",
-    "instagramSub": "@linhnguyen · 84K",
+    "instagramSub": "@minhnguyen · 84K",
     "youtubeTitle": "YOUTUBE",
-    "youtubeSub": "Linh Nguyễn · 42K",
+    "youtubeSub": "Minh Nguyễn · 42K",
     "facebookTitle": "FACEBOOK",
-    "facebookSub": "Linh Nguyễn Official",
+    "facebookSub": "Minh Nguyễn Official",
     "lookbookTitle": "LOOKBOOK",
     "lookbookSub": "Outfit mẹ bỉm đi làm",
     "recipeTitle": "CÔNG THỨC",
-    "recipeSub": "20 món bé Bơ thích nhất",
+    "recipeSub": "20 món bé Su thích nhất",
     "shopTitle": "SHOP YÊU THÍCH",
     "shopSub": "Những thứ mình đang dùng"
   },
@@ -61,7 +61,7 @@ window.__I18N__.vi = {
     "button": "► LIÊN HỆ NGAY"
   },
   "footer": {
-    "credit": "LINH NGUYỄN · 2025",
+    "credit": "MINH NGUYỄN · 2025",
     "tagline": "MADE WITH PIXEL LOVE"
   }
 };

@@ -1,7 +1,7 @@
 window.__I18N__ = window.__I18N__ || {};
 window.__I18N__.en = {
   "meta": {
-    "title": "Linh Nguyễn ✦ Pixel",
+    "title": "Minh Nguyễn ✦ Pixel",
     "htmlLang": "en"
   },
   "ui": {
@@ -9,18 +9,18 @@ window.__I18N__.en = {
     "langButtonTitle": "Chuyển sang Tiếng Việt"
   },
   "name": {
-    "first": "LINH",
+    "first": "MINH",
     "last": "NGUYEN",
-    "handle": "@linhnguyen"
+    "handle": "@minhnguyen"
   },
   "hp": {
     "label": "VIBE",
     "value": "88%"
   },
   "bio": {
-    "line1": "Mom to Bo 🧈 · Fashion lover",
+    "line1": "Mom to Su 🧈 · Fashion lover",
     "line2": "Home cook · Living authentic ✨",
-    "line3": "Hanoi · Level 28"
+    "line3": "Saigon · Level 28"
   },
   "pills": {
     "fashion": "👗 FASHION",
@@ -41,17 +41,17 @@ window.__I18N__.en = {
   },
   "links": {
     "tiktokTitle": "TIKTOK",
-    "tiktokSub": "@linhnguyen · 125K",
+    "tiktokSub": "@minhnguyen · 125K",
     "instagramTitle": "INSTAGRAM",
-    "instagramSub": "@linhnguyen · 84K",
+    "instagramSub": "@minhnguyen · 84K",
     "youtubeTitle": "YOUTUBE",
-    "youtubeSub": "Linh Nguyen · 42K",
+    "youtubeSub": "Minh Nguyen · 42K",
     "facebookTitle": "FACEBOOK",
-    "facebookSub": "Linh Nguyen Official",
+    "facebookSub": "Minh Nguyen Official",
     "lookbookTitle": "LOOKBOOK",
     "lookbookSub": "Working mom outfits",
     "recipeTitle": "RECIPES",
-    "recipeSub": "20 dishes Bo loves most",
+    "recipeSub": "20 dishes Su loves most",
     "shopTitle": "FAVORITE SHOP",
     "shopSub": "Things I'm using daily"
   },
@@ -61,7 +61,7 @@ window.__I18N__.en = {
     "button": "► GET IN TOUCH"
   },
   "footer": {
-    "credit": "LINH NGUYEN · 2025",
+    "credit": "MINH NGUYEN · 2025",
     "tagline": "MADE WITH PIXEL LOVE"
   }
 };
