@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linh Nguyễn ✦ Pixel</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #1a1230;
+  --bg2:    #241a40;
+  --purple: #7B6FBA;
+  --violet: #9f8fdc;
+  --pale:   #c9b8e8;
+  --blush:  #f4a8c0;
+  --pink:   #e87fa8;
+  --cream:  #f5f0e8;
+  --teal:   #5dcaa5;
+  --yellow: #ffd166;
+  --white:  #faf7f2;
+  --px:     4px; /* pixel unit */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; image-rendering: pixelated; }
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: 'Press Start 2P', monospace;
+  display: flex;
+  justify-content: center;
+  padding: 40px 16px 64px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Scanline overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.07) 3px,
+    rgba(0,0,0,0.07) 4px
+  );
+  pointer-events: none;
+  z-index: 9000;
+}
+
+/* Pixel star field */
+.stars {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.star {
+  position: absolute;
+  background: var(--pale);
+  animation: blink 2s infinite;
+}
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.1; }
+}
+
+.page {
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── PIXEL BORDER MIXIN ──
+   Classic 8-bit inset border using box-shadow */
+.px-box {
+  background: var(--bg2);
+  /* outer light, inner dark — pixel border illusion */
+  box-shadow:
+    /* top-left corner */
+    0 0 0 4px var(--purple),
+    0 0 0 8px var(--bg),
+    /* pixel "shadow" */
+    8px 8px 0 8px rgba(0,0,0,0.4);
+  image-rendering: pixelated;
+}
+
+/* ── AVATAR ── */
+.avatar-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  animation: fadeUp .4s steps(4) both;
+}
+
+.avatar-frame {
+  position: relative;
+  width: 88px; height: 88px;
+}
+
+/* Pixel avatar — CSS art */
+.avatar {
+  width: 80px; height: 80px;
+  background: var(--purple);
+  image-rendering: pixelated;
+  position: relative;
+
+  /* Pixel "face" using box-shadow on pseudo */
+  box-shadow:
+    0 0 0 4px var(--pale),
+    0 0 0 8px var(--bg);
+}
+
+/* Pixel sprite face drawn with box-shadow */
+.avatar::before {
+  content: '';
+  position: absolute;
+  /* eyes */
+  width: 8px; height: 8px;
+  background: var(--bg);
+  top: 24px; left: 20px;
+  box-shadow:
+    32px 0 0 var(--bg),          /* right eye */
+    0 16px 0 var(--blush),       /* blush left */
+    32px 16px 0 var(--blush),    /* blush right */
+    8px 28px 0 var(--bg),        /* mouth */
+    16px 32px 0 var(--bg),       /* mouth */
+    24px 28px 0 var(--bg);       /* mouth */
+}
+.avatar::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 8px;
+  width: 64px; height: 16px;
+  background: var(--bg);         /* hair top */
+  box-shadow:
+    -8px 8px 0 var(--bg),        /* hair left */
+    64px 8px 0 var(--bg);        /* hair right */
+}
+
+/* Floating pixel sparkles */
+.sparkle {
+  position: absolute;
+  font-size: 12px;
+  animation: floatPx 3s steps(6) infinite;
+  font-family: 'VT323', monospace;
+}
+.sp1 { top: -8px; right: -12px; color: var(--yellow); animation-delay: 0s; }
+.sp2 { bottom: -4px; right: -16px; color: var(--blush); animation-delay: .8s; }
+.sp3 { top: 4px; left: -14px; color: var(--teal); animation-delay: 1.4s; }
+
+@keyframes floatPx {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+/* ── NAME ── */
+.name {
+  text-align: center;
+  font-size: 14px;
+  color: var(--pale);
+  letter-spacing: 1px;
+  line-height: 1.6;
+  margin-bottom: 4px;
+  animation: fadeUp .4s .1s steps(4) both;
+  text-shadow: 3px 3px 0 var(--purple);
+}
+.name span { color: var(--blush); }
+
+/* Blinking cursor */
+.cursor-blink {
+  display: inline-block;
+  width: 10px; height: 14px;
+  background: var(--violet);
+  vertical-align: middle;
+  animation: cursorBlink .8s steps(1) infinite;
+  margin-left: 4px;
+}
+@keyframes cursorBlink {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
+.handle {
+  text-align: center;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: var(--violet);
+  letter-spacing: 3px;
+  margin-bottom: 14px;
+  animation: fadeUp .4s .15s steps(4) both;
+}
+
+/* ── TYPEWRITER BIO ── */
+.bio {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: var(--cream);
+  text-align: center;
+  line-height: 1.55;
+  margin-bottom: 20px;
+  animation: fadeUp .4s .2s steps(4) both;
+  opacity: 0.85;
+}
+
+/* ── PIXEL PILLS ── */
+.pills {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  animation: fadeUp .4s .22s steps(4) both;
+}
+.pill {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  padding: 6px 14px;
+  background: var(--bg2);
+  color: var(--pale);
+  border: none;
+  /* pixel border */
+  box-shadow:
+    -4px 0 0 var(--purple),
+    4px 0 0 var(--purple),
+    0 -4px 0 var(--purple),
+    0 4px 0 var(--purple);
+  letter-spacing: 1px;
+}
+.pill-v { color: var(--pale); }
+.pill-b { color: var(--blush); }
+.pill-t { color: var(--teal); }
+
+/* ── STATS ── */
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 28px;
+  animation: fadeUp .4s .26s steps(4) both;
+}
+.stat {
+  background: var(--bg2);
+  padding: 14px 8px;
+  text-align: center;
+  box-shadow:
+    -4px 0 0 var(--purple),
+    4px 0 0 var(--purple),
+    0 -4px 0 var(--purple),
+    0 4px 0 var(--purple);
+}
+.stat-n {
+  font-size: 13px;
+  color: var(--yellow);
+  margin-bottom: 6px;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+.stat-l {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: var(--violet);
+  letter-spacing: 1px;
+}
+
+/* ── SECTION LABEL ── */
+.section-label {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: var(--violet);
+  letter-spacing: 4px;
+  text-align: center;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.section-label::before { content: '▶ '; color: var(--blush); }
+
+/* ── PIXEL LINK BUTTONS ── */
+.links { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+
+.link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--bg2);
+  text-decoration: none;
+  color: var(--cream);
+  /* pixel border */
+  box-shadow:
+    -4px 0 0 var(--purple),
+    4px 0 0 var(--purple),
+    0 -4px 0 var(--purple),
+    0 4px 0 var(--purple),
+    6px 6px 0 rgba(0,0,0,0.4);
+  transition: transform .1s steps(2), box-shadow .1s steps(2), background .1s steps(1);
+  position: relative;
+  animation: fadeUp .4s steps(4) both;
+}
+.link-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow:
+    -4px 0 0 var(--violet),
+    4px 0 0 var(--violet),
+    0 -4px 0 var(--violet),
+    0 4px 0 var(--violet),
+    8px 8px 0 rgba(0,0,0,0.5);
+  background: #2d2050;
+}
+.link-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow:
+    -4px 0 0 var(--purple),
+    4px 0 0 var(--purple),
+    0 -4px 0 var(--purple),
+    0 4px 0 var(--purple),
+    2px 2px 0 rgba(0,0,0,0.3);
+}
+
+.link-btn:nth-child(1) { animation-delay: .3s; }
+.link-btn:nth-child(2) { animation-delay: .35s; }
+.link-btn:nth-child(3) { animation-delay: .40s; }
+.link-btn:nth-child(4) { animation-delay: .45s; }
+
+.link-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.link-icon {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  image-rendering: pixelated;
+  /* pixel icon frame */
+  box-shadow:
+    -2px 0 0 var(--purple),
+    2px 0 0 var(--purple),
+    0 -2px 0 var(--purple),
+    0 2px 0 var(--purple);
+  background: var(--bg);
+}
+
+.link-title {
+  font-size: 8px;
+  color: var(--pale);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.link-sub {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: var(--violet);
+}
+
+.link-arrow {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  color: var(--blush);
+  animation: arrowPulse 1.2s steps(2) infinite;
+}
+@keyframes arrowPulse {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* ── COLLAB CTA ── */
+.cta-card {
+  background: var(--purple);
+  padding: 24px 20px;
+  text-align: center;
+  margin-bottom: 28px;
+  position: relative;
+  animation: fadeUp .4s .5s steps(4) both;
+  box-shadow:
+    -4px 0 0 var(--pale),
+    4px 0 0 var(--pale),
+    0 -4px 0 var(--pale),
+    0 4px 0 var(--pale),
+    8px 8px 0 rgba(0,0,0,0.5);
+}
+
+/* Pixel corner decorations */
+.cta-card::before {
+  content: '★';
+  position: absolute;
+  top: 8px; left: 10px;
+  font-size: 10px;
+  color: var(--yellow);
+  animation: floatPx 2s steps(4) infinite;
+}
+.cta-card::after {
+  content: '★';
+  position: absolute;
+  top: 8px; right: 10px;
+  font-size: 10px;
+  color: var(--yellow);
+  animation: floatPx 2s steps(4) .5s infinite;
+}
+
+.cta-title {
+  font-size: 10px;
+  color: var(--cream);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 0 var(--bg2);
+}
+.cta-sub {
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: var(--blush);
+  color: #4B1528;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  text-decoration: none;
+  letter-spacing: 1px;
+  box-shadow:
+    -4px 0 0 #c47090,
+    4px 0 0 #c47090,
+    0 -4px 0 #c47090,
+    0 4px 0 #c47090,
+    4px 4px 0 rgba(0,0,0,0.4);
+  transition: transform .1s steps(2), box-shadow .1s steps(2);
+}
+.cta-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow:
+    -4px 0 0 #e87fa8,
+    4px 0 0 #e87fa8,
+    0 -4px 0 #e87fa8,
+    0 4px 0 #e87fa8,
+    6px 6px 0 rgba(0,0,0,0.5);
+}
+.cta-btn:active { transform: translate(2px, 2px); }
+
+/* ── PIXEL DIVIDER ── */
+.px-divider {
+  text-align: center;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: var(--purple);
+  letter-spacing: 3px;
+  margin: 4px 0 18px;
+  animation: fadeUp .4s .28s steps(4) both;
+}
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center;
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: var(--violet);
+  letter-spacing: 2px;
+  animation: fadeUp .4s .55s steps(4) both;
+  line-height: 1.8;
+}
+.footer span { color: var(--blush); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── LANGUAGE SWITCHER ── */
+.lang-switch {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9001;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  color: var(--cream);
+  background: var(--bg2);
+  padding: 10px 14px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 1px;
+  box-shadow:
+    -4px 0 0 var(--purple),
+    4px 0 0 var(--purple),
+    0 -4px 0 var(--purple),
+    0 4px 0 var(--purple),
+    4px 4px 0 rgba(0,0,0,0.4);
+  transition: transform .1s steps(2), box-shadow .1s steps(2), background .1s steps(1);
+  image-rendering: pixelated;
+}
+.lang-switch:hover {
+  transform: translate(-2px, -2px);
+  background: #2d2050;
+  box-shadow:
+    -4px 0 0 var(--violet),
+    4px 0 0 var(--violet),
+    0 -4px 0 var(--violet),
+    0 4px 0 var(--violet),
+    6px 6px 0 rgba(0,0,0,0.5);
+  color: var(--blush);
+}
+.lang-switch:active {
+  transform: translate(2px, 2px);
+  box-shadow:
+    -4px 0 0 var(--purple),
+    4px 0 0 var(--purple),
+    0 -4px 0 var(--purple),
+    0 4px 0 var(--purple),
+    2px 2px 0 rgba(0,0,0,0.3);
+}
+.lang-switch::before {
+  content: '🌐 ';
+  font-size: 10px;
+}
+
+/* ── PIXEL HEALTH BAR (decoration) ── */
+.hp-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 20px;
+  animation: fadeUp .4s .18s steps(4) both;
+}
+.hp-label {
+  font-family: 'VT323', monospace;
+  font-size: 13px;
+  color: var(--violet);
+}
+.hp-track {
+  width: 120px; height: 10px;
+  background: var(--bg2);
+  box-shadow: -2px 0 0 var(--purple), 2px 0 0 var(--purple), 0 -2px 0 var(--purple), 0 2px 0 var(--purple);
+  overflow: hidden;
+}
+.hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blush) 0%, var(--pink) 100%);
+  width: 88%;
+  animation: hpLoad 1s .6s steps(8) both;
+}
+@keyframes hpLoad {
+  from { width: 0; }
+  to   { width: 88%; }
+}
+</style>
+</head>
+<body>
+
+<!-- Translation dictionaries (one file per language) -->
+<script src="vi.js"></script>
+<script src="en.js"></script>
+
+<!-- Language switcher -->
+<button class="lang-switch" id="langSwitch" type="button" title="Switch language">EN</button>
+
+<!-- Pixel stars -->
+<div class="stars" id="stars"></div>
+
+<div class="page">
+
+  <!-- Avatar -->
+  <div class="avatar-wrap">
+    <div class="avatar-frame">
+      <div class="avatar"></div>
+      <span class="sparkle sp1">✦</span>
+      <span class="sparkle sp2">♥</span>
+      <span class="sparkle sp3">★</span>
+    </div>
+  </div>
+
+  <!-- Name -->
+  <div class="name"><span data-i18n="name.first">LINH</span> <span style="color:var(--blush);" data-i18n="name.last">NGUYỄN</span><span class="cursor-blink"></span></div>
+  <div class="handle" data-i18n="name.handle">@linhnguyen</div>
+
+  <!-- HP Bar (vibe meter) -->
+  <div class="hp-bar">
+    <span class="hp-label" data-i18n="hp.label">VIBE</span>
+    <div class="hp-track"><div class="hp-fill"></div></div>
+    <span class="hp-label" data-i18n="hp.value">88%</span>
+  </div>
+
+  <!-- Bio -->
+  <div class="bio">
+    <span data-i18n="bio.line1">Mẹ của Bơ 🧈 · Yêu thời trang</span><br>
+    <span data-i18n="bio.line2">Mê bếp núc · Sống authentic ✨</span><br>
+    <span style="color:var(--blush);" data-i18n="bio.line3">Hà Nội · Level 28</span>
+  </div>
+
+  <!-- Pills -->
+  <div class="pills">
+    <span class="pill pill-v" data-i18n="pills.fashion">👗 FASHION</span>
+    <span class="pill pill-b" data-i18n="pills.mom">🍼 MOM</span>
+    <span class="pill pill-t" data-i18n="pills.food">🍳 FOOD</span>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-n" data-i18n="stats.tiktokNumber">125K</div>
+      <div class="stat-l" data-i18n="stats.tiktokLabel">TIKTOK</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n" data-i18n="stats.instaNumber">84K</div>
+      <div class="stat-l" data-i18n="stats.instaLabel">INSTA</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n" data-i18n="stats.engNumber">4.8%</div>
+      <div class="stat-l" data-i18n="stats.engLabel">ENG.</div>
+    </div>
+  </div>
+
+  <div class="px-divider">· · · · · · · · · · · · ·</div>
+
+  <!-- Social links -->
+  <div class="section-label" data-i18n="sections.follow">Follow me</div>
+  <div class="links">
+    <a href="#" class="link-btn">
+      <div class="link-left">
+        <div class="link-icon">📱</div>
+        <div>
+          <div class="link-title" data-i18n="links.tiktokTitle">TIKTOK</div>
+          <div class="link-sub" data-i18n="links.tiktokSub">@linhnguyen · 125K</div>
+        </div>
+      </div>
+      <span class="link-arrow">▶</span>
+    </a>
+
+    <a href="#" class="link-btn">
+      <div class="link-left">
+        <div class="link-icon">📸</div>
+        <div>
+          <div class="link-title" data-i18n="links.instagramTitle">INSTAGRAM</div>
+          <div class="link-sub" data-i18n="links.instagramSub">@linhnguyen · 84K</div>
+        </div>
+      </div>
+      <span class="link-arrow">▶</span>
+    </a>
+
+    <a href="#" class="link-btn">
+      <div class="link-left">
+        <div class="link-icon">🎬</div>
+        <div>
+          <div class="link-title" data-i18n="links.youtubeTitle">YOUTUBE</div>
+          <div class="link-sub" data-i18n="links.youtubeSub">Linh Nguyễn · 42K</div>
+        </div>
+      </div>
+      <span class="link-arrow">▶</span>
+    </a>
+
+    <a href="#" class="link-btn">
+      <div class="link-left">
+        <div class="link-icon">📘</div>
+        <div>
+          <div class="link-title" data-i18n="links.facebookTitle">FACEBOOK</div>
+          <div class="link-sub" data-i18n="links.facebookSub">Linh Nguyễn Official</div>
+        </div>
+      </div>
+      <span class="link-arrow">▶</span>
+    </a>
+  </div>
+
+  <div class="px-divider">· · · · · · · · · · · · ·</div>
+
+  <!-- Content links -->
+  <div class="section-label" data-i18n="sections.content">Content</div>
+  <div class="links">
+    <a href="#" class="link-btn" style="animation-delay:.42s;">
+      <div class="link-left">
+        <div class="link-icon">👗</div>
+        <div>
+          <div class="link-title" data-i18n="links.lookbookTitle">LOOKBOOK</div>
+          <div class="link-sub" data-i18n="links.lookbookSub">Outfit mẹ bỉm đi làm</div>
+        </div>
+      </div>
+      <span class="link-arrow">▶</span>
+    </a>
+
+    <a href="#" class="link-btn" style="animation-delay:.46s;">
+      <div class="link-left">
+        <div class="link-icon">🍳</div>
+        <div>
+          <div class="link-title" data-i18n="links.recipeTitle">CÔNG THỨC</div>
+          <div class="link-sub" data-i18n="links.recipeSub">20 món bé Bơ thích nhất</div>
+        </div>
+      </div>
+      <span class="link-arrow">▶</span>
+    </a>
+
+    <a href="#" class="link-btn" style="animation-delay:.50s;">
+      <div class="link-left">
+        <div class="link-icon">🛍️</div>
+        <div>
+          <div class="link-title" data-i18n="links.shopTitle">SHOP YÊU THÍCH</div>
+          <div class="link-sub" data-i18n="links.shopSub">Những thứ mình đang dùng</div>
+        </div>
+      </div>
+      <span class="link-arrow">▶</span>
+    </a>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-card">
+    <div class="cta-title" data-i18n="cta.title">[ COLLAB REQUEST ]</div>
+    <div class="cta-sub" data-i18n-html="cta.sub">Mình nhận collab về fashion,<br>đồ mẹ & bé, thực phẩm 🌸</div>
+    <a href="mailto:hello@linhnguyen.com" class="cta-btn" data-i18n="cta.button">► LIÊN HỆ NGAY</a>
+  </div>
+
+  <div class="footer">
+    <span>♥</span> <span data-i18n="footer.credit">LINH NGUYỄN · 2025</span> <span>♥</span><br>
+    <span style="font-size:12px;color:var(--purple);" data-i18n="footer.tagline">MADE WITH PIXEL LOVE</span>
+  </div>
+
+</div>
+
+<script>
+  // ── Generate random pixel stars ──
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 40; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = [2, 4][Math.floor(Math.random() * 2)];
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*100}%;
+      left:${Math.random()*100}%;
+      animation-delay:${(Math.random()*3).toFixed(1)}s;
+      animation-duration:${(1.5+Math.random()*2).toFixed(1)}s;
+      opacity:${(0.3+Math.random()*0.7).toFixed(1)};
+    `;
+    starsEl.appendChild(s);
+  }
+
+  // ── i18n: dictionaries are loaded via vi.js / en.js into window.__I18N__ ──
+  const translations = window.__I18N__ || {};
+  let currentLang = localStorage.getItem('lang') || 'vi';
+
+  function getByPath(obj, path) {
+    return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : null), obj);
+  }
+
+  function applyLang(lang) {
+    if (!translations || !translations[lang]) return;
+    const dict = translations[lang];
+
+    // Plain text nodes
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const value = getByPath(dict, el.getAttribute('data-i18n'));
+      if (value !== null) el.textContent = value;
+    });
+
+    // HTML nodes (for strings containing <br> etc.)
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const value = getByPath(dict, el.getAttribute('data-i18n-html'));
+      if (value !== null) el.innerHTML = value;
+    });
+
+    // Document meta
+    if (dict.meta && dict.meta.title) document.title = dict.meta.title;
+    if (dict.meta && dict.meta.htmlLang) document.documentElement.lang = dict.meta.htmlLang;
+
+    // Language switch button label
+    const btn = document.getElementById('langSwitch');
+    if (btn && dict.ui) {
+      btn.textContent = dict.ui.langButton;
+      if (dict.ui.langButtonTitle) btn.title = dict.ui.langButtonTitle;
+    }
+
+    currentLang = lang;
+    localStorage.setItem('lang', lang);
+  }
+
+  document.getElementById('langSwitch').addEventListener('click', () => {
+    applyLang(currentLang === 'vi' ? 'en' : 'vi');
+  });
+
+  applyLang(currentLang);
+</script>
+</body>
+</html>
